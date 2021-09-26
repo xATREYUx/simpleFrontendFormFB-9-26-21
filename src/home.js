@@ -1,5 +1,5 @@
-import PostForm from "./postForm";
-import PostList from "./postList";
+import PostForm from "./posts/postForm";
+import PostList from "./posts/postList";
 
 const Home = () => {
   return (

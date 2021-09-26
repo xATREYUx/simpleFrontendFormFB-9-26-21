@@ -1,6 +1,6 @@
 import "./App.css";
 import Home from "./home";
-import { PostContextProvider } from "./postContext";
+import { PostContextProvider } from "./posts/postContext";
 
 const App = () => {
   return (

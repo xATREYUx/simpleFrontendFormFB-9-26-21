@@ -2,29 +2,27 @@ import { useContext, useState } from "react";
 import PostContext from "./postContext";
 
 const PostCard = ({ data, index }) => {
-  const { posts, setPosts } = useContext(PostContext);
+  const { posts, setPosts, createPost, updatePost } = useContext(PostContext);
 
   const [editMode, setEditMode] = useState(false);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState({ title: "", caption: "" });
 
   const handleEdit = () => {
     setEditMode(true);
-    setInput(data.title);
+    setInput({ title: data.title, caption: data.caption });
   };
+
   const handleUpdatePost = () => {
-    let allPosts = posts;
-    let postToUpdate = allPosts[index];
-    postToUpdate.title = input;
-    allPosts[index] = postToUpdate;
-    setPosts(allPosts);
-    setInput("");
+    updatePost(data, input, index);
+    setInput({ title: "", caption: "" });
     setEditMode(false);
   };
 
   return (
     <>
       <div style={{ visibility: editMode ? "hidden" : "visible" }}>
-        {data.title}
+        <div>{data.title}</div>
+        <div>{data.caption}</div>
       </div>
       <button
         style={{ visibility: editMode ? "hidden" : "visible" }}
@@ -36,8 +34,15 @@ const PostCard = ({ data, index }) => {
         name="title"
         style={{ visibility: editMode ? "visible" : "hidden" }}
         type="text"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
+        value={input.title}
+        onChange={(e) => setInput({ ...input, title: e.target.value })}
+      />
+      <input
+        name="caption"
+        style={{ visibility: editMode ? "visible" : "hidden" }}
+        type="text"
+        value={input.caption}
+        onChange={(e) => setInput({ ...input, caption: e.target.value })}
       />
       <button
         style={{ visibility: editMode ? "visible" : "hidden" }}

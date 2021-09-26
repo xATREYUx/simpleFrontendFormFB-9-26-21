@@ -1,10 +1,10 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import PostContext from "./postContext";
-import { appendErrors, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
+// import { createPost } from "./postActions";
 
 const PostForm = () => {
-  const { setPosts } = useContext(PostContext);
-  const [inputValues, setInputValues] = useState([]);
+  const { setPosts, createPost } = useContext(PostContext);
   const {
     register,
     handleSubmit,
@@ -13,14 +13,14 @@ const PostForm = () => {
   } = useForm("");
 
   const submitPost = async (data) => {
-    // setInputValues(data.title);
     var formData = new FormData();
     const dataFunction = async () => {
       formData.append("title", data.title);
-      formData.append("caption", data.title);
+      formData.append("caption", data.caption);
     };
     await dataFunction();
-    setPosts((currentValues) => [...currentValues, data]);
+    // setPosts((currentValues) => [...currentValues, data]);
+    await createPost(formData);
     reset();
   };
 
